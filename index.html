@@ -177,7 +177,7 @@
                       <span style="flex:1;min-width:0"><span style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ b.name }}</span><span style="display:block;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:color-mix(in srgb, var(--color-text) 55%, transparent)">{{ b.by }}</span></span>
                       <span style="font-variant-numeric:tabular-nums">{{ b.amount }}</span>
                       <span style="font-variant-numeric:tabular-nums;font-size:12px;color:var(--color-accent-300);width:74px;text-align:right">→ {{ b.win }}</span>
-                      <button type="button" onClick="{{ b.remove }}" title="Retirer ce pari" style="border:0;background:transparent;color:color-mix(in srgb, var(--color-text) 55%, transparent);cursor:pointer;padding:0 2px;font-size:14px;line-height:1" style-hover="color:var(--color-accent)"><i class="ph ph-x"></i></button>
+                      <button type="button" onClick="{{ b.remove }}" title="Supprimer ce pari" aria-label="Supprimer le pari de {{ b.name }}" style="border:0;background:transparent;color:color-mix(in srgb, var(--color-text) 55%, transparent);cursor:pointer;padding:0 2px;font-size:14px;line-height:1" style-hover="color:var(--color-accent)"><i class="ph ph-trash"></i></button>
                     </div>
                   </sc-for>
                   <sc-if value="{{ sd.empty }}" hint-placeholder-val="{{ false }}">
@@ -385,7 +385,7 @@
           <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
             <div style="margin-top:var(--space-4);padding-top:var(--space-4);background:linear-gradient(to right,transparent,var(--color-divider) 48px,var(--color-divider) calc(100% - 48px),transparent) no-repeat top / 100% 1px;animation:kb-rise .18s ease">
               <table class="table" style="font-size:13px">
-                <thead><tr><th>Parieur</th><th>Sur</th><th>Pris par</th><th style="text-align:right">Mise</th><th style="text-align:right">À payer</th><th style="text-align:right">Net</th><th style="width:104px;text-align:right">Rendu</th></tr></thead>
+                <thead><tr><th>Parieur</th><th>Sur</th><th>Pris par</th><th style="text-align:right">Mise</th><th style="text-align:right">À payer</th><th style="text-align:right">Net</th><th style="width:104px;text-align:right">Rendu</th><th style="width:32px;text-align:right"></th></tr></thead>
                 <tbody>
                   <sc-for list="{{ f.payouts }}" as="p" hint-placeholder-count="3">
                     <tr>
@@ -400,6 +400,7 @@
                           <button type="button" onClick="{{ p.togglePaid }}" title="{{ p.paidHint }}" style="padding:3px 10px;border-radius:var(--radius-sm);cursor:pointer;font:inherit;font-size:11px;white-space:nowrap;border:1px solid {{ p.paidBorder }};background:{{ p.paidBg }};color:{{ p.paidColor }}" style-hover="border-color:var(--color-accent)">{{ p.paidLabel }}</button>
                         </sc-if>
                       </td>
+                      <td style="text-align:right"><button type="button" onClick="{{ p.remove }}" title="Supprimer ce pari" aria-label="Supprimer le pari de {{ p.name }}" style="border:0;background:transparent;color:color-mix(in srgb, var(--color-text) 55%, transparent);cursor:pointer;padding:3px;font-size:14px;line-height:1" style-hover="color:var(--color-accent)"><i class="ph ph-trash"></i></button></td>
                     </tr>
                   </sc-for>
                 </tbody>
@@ -1512,6 +1513,7 @@ class Component extends DCLogic {
               name: b.name, amount: this.n(b.amount), win: this.n(this.projected(f, b)),
               by: 'pris par ' + (b.by || '—') + ' · part ' + this.n(this.feeOf(b, f)) + ' 両',
               remove: () => {
+                if (!window.confirm('Supprimer le pari de ' + b.name + ' ?')) return;
                 const before = this.snapFight(f);
                 this.act(async store => {
                   await store.removeBet(f.id, b);
@@ -1624,7 +1626,15 @@ class Component extends DCLogic {
               paidBorder: b.paidMs ? 'var(--color-accent)' : 'var(--color-divider)',
               paidBg: b.paidMs ? 'color-mix(in srgb, var(--color-accent) 16%, transparent)' : 'transparent',
               paidColor: b.paidMs ? 'var(--color-accent)' : this.muted(),
-              togglePaid: () => this.setPaid([{ f, b }], !b.paidMs)
+              togglePaid: () => this.setPaid([{ f, b }], !b.paidMs),
+              remove: () => {
+                if (!window.confirm('Supprimer le pari de ' + b.name + ' ?')) return;
+                const before = this.snapFight(f);
+                this.act(async store => {
+                  await store.removeBet(f.id, b);
+                  return { kind: 'bet.remove', icon: 'ph-x-circle', label: 'Pari de ' + b.name + ' retiré (' + this.n(b.amount) + ' 両 sur ' + f[b.side] + ')', scope: 'fight', ref: f.id, before };
+                }, 'Pari de ' + b.name + ' retiré');
+              }
             };
           }),
           reopen: () => {
