@@ -12,12 +12,12 @@
    (voir scripts/write-config.mjs et .github/workflows/deploy.yml). */
 
 window.__AMEBET_FIREBASE__ = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: "",
+  apiKey: "AIzaSyAb7Lx0lwuXfOaLNIQECeS6J1eKRzFZJm4",
+  authDomain: "amebet-5f04c.firebaseapp.com",
+  projectId: "amebet-5f04c",
+  storageBucket: "amebet-5f04c.firebasestorage.app",
+  messagingSenderId: "578817792837",
+  appId: "1:578817792837:web:12bfd3845a0c2ce1e7bc2c",
   // Analytics n'est pas chargé par AmeBet ; gardé pour coller à la console.
-  measurementId: "G-CKJQRKRSWP"
+  measurementId: "G-K1HEKER5PK"
 };
