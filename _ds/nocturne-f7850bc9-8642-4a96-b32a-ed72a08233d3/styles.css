@@ -2,41 +2,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --color-bg: #161826;
-  --color-surface: #232532;
-  --color-text: #e9e9ed;
-  --color-accent: #9184d9; /* review round 7 (Barron): the accent moves to
+  --color-bg: #070c15;
+  --color-surface: #101b2a;
+  --color-text: #eaf5ff;
+  --color-accent: #65caff; /* review round 7 (Barron): the accent moves to
      the product's blurple — OKLCH hue 289.2, the hue of the app's own Pro
      accent (#9a8fe0, --om-accent-pro) — at the same lightness the steel
      accent held (L 0.660, so the documented ratios survive) and chroma
      in the product blurple's own range (its token sits at C 0.118; the
      accent takes 0.125, from the old steel's 0.030):
      the accent now reads as an accent rather than another neutral. */
-  --color-accent-2: #a7a1db; /* the machine-derived stand-in follows: same
+  --color-accent-2: #a47cff; /* the machine-derived stand-in follows: same
      hue, same L 0.734, chroma at the same 2:3 proportion it held */
-  --color-divider: color-mix(in srgb, #e9e9ed 16%, transparent);
+  --color-divider: color-mix(in srgb, #91b8d8 21%, transparent);
 
   /* Tonal ramps — generated in OKLCH on one shared lightness scale, so the
      same step of any role matches the others in visual value. */
-  --color-neutral-100: #f3f5fe;
-  --color-neutral-200: #e4e7f5;
-  --color-neutral-300: #cfd3e5;
-  --color-neutral-400: #b2b6ca;
-  --color-neutral-500: #9397ab;
-  --color-neutral-600: #75798c;
-  --color-neutral-700: #595d6c;
-  --color-neutral-800: #3f424d;
-  --color-neutral-900: #292b31;
+  --color-neutral-100: #eef8ff;
+  --color-neutral-200: #d5e8f6;
+  --color-neutral-300: #b8cddd;
+  --color-neutral-400: #91aabd;
+  --color-neutral-500: #71899e;
+  --color-neutral-600: #536b80;
+  --color-neutral-700: #394f64;
+  --color-neutral-800: #22394d;
+  --color-neutral-900: #132536;
 
-  --color-accent-100: #f5f4ff;
-  --color-accent-200: #e7e5fe;
-  --color-accent-300: #d2cefd;
-  --color-accent-400: #b5abfc;
-  --color-accent-500: #968ae0;
-  --color-accent-600: #796cbf;
-  --color-accent-700: #5d5294;
-  --color-accent-800: #423a6a;
-  --color-accent-900: #2b2741;
+  --color-accent-100: #effaff;
+  --color-accent-200: #d4f2ff;
+  --color-accent-300: #a8e2ff;
+  --color-accent-400: #82d3ff;
+  --color-accent-500: #65caff;
+  --color-accent-600: #3d9fda;
+  --color-accent-700: #2776aa;
+  --color-accent-800: #1c537e;
+  --color-accent-900: #112f50;
 
   --color-accent-2-100: #f5f4ff;
   --color-accent-2-200: #e7e5fe;
@@ -75,9 +75,9 @@
 
   /* Elevation — derived from the ground: soft ink-tinted shadows on a
      light theme, a hairline edge + ambient darkness on a dark one. */
-  --shadow-sm: 0 0 0 1px #3f424d;
-  --shadow-md: 0 0 0 1px #595d6c, 0 6px 18px rgba(0,0,0,0.55);
-  --shadow-lg: 0 0 0 1px #9397ab, 0 16px 40px rgba(0,0,0,0.65);
+  --shadow-sm: 0 0 0 1px rgba(114, 179, 221, .17), 0 10px 28px rgba(0, 0, 0, .22);
+  --shadow-md: 0 0 0 1px rgba(114, 179, 221, .28), 0 16px 42px rgba(0,0,0,.38);
+  --shadow-lg: 0 0 0 1px rgba(168, 226, 255, .34), 0 24px 60px rgba(0,0,0,.52);
 }
 
 body {
@@ -291,4 +291,3 @@ textarea.input { min-height: 90px; resize: vertical; }
 }
 .dialog-body { font-size: 14px; opacity: 0.85; }
 .dialog-actions { display: flex; justify-content: flex-end; gap: var(--space-2); margin-top: var(--space-2); }
-
